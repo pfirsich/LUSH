@@ -53,8 +53,7 @@ function lush.getSourceProperties(src)
 end
 	
 function lush.update() 
-	-- Benchmark this and see how many elements are removed each update. 
-	-- If the number is big enough, consider using the version in "BenchmarkLater"
+	-- Benchmark this and see how many elements are removed each update. If the number is big enough, consider using the version in "BenchmarkLater"
 	--local useNow = [[
 	for i = #sources, 1, -1 do
 		if sources[i].source:isStopped() then
