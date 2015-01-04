@@ -12,6 +12,7 @@ end
 
 lush = {} -- Lightweight, Unefficient Sound Helper library
 local sources = {}
+local path = ""
 
 local transformTagList = function(tags)
 	local ret = {}
@@ -20,9 +21,12 @@ local transformTagList = function(tags)
 	end
 	return ret
 end
+
+function lush.setPath(p) path = p end
 	
 function lush.play(filename, properties)
 	if type(filename) == "table" then filename = filename[love.math.random(1,#filename)] end
+	filename = path .. filename
 	
 	properties = properties and properties or {}
 	properties.looping = properties.looping and properties.looping or false
