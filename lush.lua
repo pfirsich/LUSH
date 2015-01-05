@@ -29,9 +29,9 @@ function lush.play(filename, properties)
 	filename = path .. filename
 	
 	properties = properties and properties or {}
-	properties.looping = properties.looping and properties.looping or false
-	properties.stream = properties.stream and properties.stream or false
-	properties.volume = properties.volume and properties.volume or 1.0
+	properties.looping = properties.looping or false
+	properties.stream = properties.stream or false
+	properties.volume = properties.volume or 1.0
 	properties.tags = properties.tags and transformTagList(properties.tags) or {}
 	properties.tags["all"] = true
 	
