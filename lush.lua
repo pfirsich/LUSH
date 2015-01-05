@@ -28,7 +28,7 @@ function lush.play(filename, properties)
 	if type(filename) == "table" then filename = filename[love.math.random(1,#filename)] end
 	filename = path .. filename
 	
-	properties = properties and properties or {}
+	properties = properties or {}
 	properties.looping = properties.looping or false
 	properties.stream = properties.stream or false
 	properties.volume = properties.volume or 1.0
