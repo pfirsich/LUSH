@@ -13,7 +13,7 @@ end
 lush = {} -- Lightweight, Unefficient Sound Helper library
 local sources = {}
 local path = ""
-local masterVolume = 1.0
+local defaultVolume = 1.0
 
 local transformTagList = function(tags)
 	local ret = {}
@@ -25,24 +25,28 @@ end
 
 function lush.setPath(p) path = p end
 
-function lush.setMasterVolume(vol) masterVolume = vol end
+function lush.setDefaultVolume(vol) defaultVolume = vol end
 	
-function lush.play(filename, properties)
-	if type(filename) == "table" then filename = filename[love.math.random(1,#filename)] end
-	filename = path .. filename
-	
+function lush.play(dataSource, properties)
 	properties = properties or {}
 	properties.looping = properties.looping or false
 	properties.stream = properties.stream or false
-	properties.volume = properties.volume or masterVolume
+	properties.volume = properties.volume or defaultVolume
 	properties.tags = properties.tags and transformTagList(properties.tags) or {}
 	properties.tags["all"] = true
 	
 	local src
-	if properties.stream == true then
-		src = love.audio.newSource(filename, "stream")
+	if type(dataSource) == "userdata" and dataSource:typeOf("SoundData") then
+		src = love.audio.newSource(dataSource)
 	else
-		src = love.audio.newSource(getSoundData(filename))
+		if type(dataSource) == "table" then dataSource = dataSource[love.math.random(1,#dataSource)] end
+		dataSource = path .. dataSource
+		
+		if properties.stream == true then
+			src = love.audio.newSource(dataSource, "stream")
+		else
+			src = love.audio.newSource(getSoundData(dataSource))
+		end
 	end
 	
 	src:setLooping(properties.looping)
