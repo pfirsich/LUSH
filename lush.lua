@@ -13,6 +13,7 @@ end
 lush = {} -- Lightweight, Unefficient Sound Helper library
 local sources = {}
 local path = ""
+local masterVolume = 1.0
 
 local transformTagList = function(tags)
 	local ret = {}
@@ -23,6 +24,8 @@ local transformTagList = function(tags)
 end
 
 function lush.setPath(p) path = p end
+
+function lush.setMasterVolume(vol) masterVolume = vol end
 	
 function lush.play(filename, properties)
 	if type(filename) == "table" then filename = filename[love.math.random(1,#filename)] end
@@ -31,7 +34,7 @@ function lush.play(filename, properties)
 	properties = properties or {}
 	properties.looping = properties.looping or false
 	properties.stream = properties.stream or false
-	properties.volume = properties.volume or 1.0
+	properties.volume = properties.volume or masterVolume
 	properties.tags = properties.tags and transformTagList(properties.tags) or {}
 	properties.tags["all"] = true
 	
