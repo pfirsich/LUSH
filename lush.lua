@@ -51,6 +51,9 @@ function lush.play(dataSource, properties)
 	
 	src:setLooping(properties.looping)
 	src:setVolume(properties.volume)
+	if properties.pitchShift then
+		src:setPitch(properties.pitchShift + 1.0)
+	end
 	love.audio.play(src)
 	
 	table.insert(sources, {source = src, properties = properties})
