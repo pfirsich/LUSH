@@ -1,29 +1,38 @@
-require "lush"
+# LUSH
+A simple Sound helper library for love2d. main.lua is enough of an example and a reference.
 
-function love.load()
-	bgMusic = lush.play("jingle.ogg", {tags = {"bgmusic"}, looping = true, stream = true})
-	nextShot = 0
-end
+### Playing a sound
+> lush = require("lush")
 
-function love.update()
-	if nextShot < love.timer.getTime() then
-		nextShot = love.timer.getTime() + 0.5
-		lush.play({"1.wav", "2.wav"})
-	end
-	
-	lush.tagSetVolume({"all"}, 1.0)
-	
-	if love.keyboard.isDown(" ") then
-		lush.tagSetVolume({"all"}, 0.1)
-	end
-	
-	if love.keyboard.isDown("lctrl") then
-		lush.tagSetVolume({"bgmusic"}, 0.1)
-	end
-	
-	if love.keyboard.isDown("s") then
-		lush.tagStop({"all"})
-	end
-	
-	lush.update()
-end
+> lush.play("filename.wav", {tags = {"whatever"}, looping = true})
+Other possible properties are: volume (0.0 - 1.0), stream (bool), pitchShift (0.0 is default).
+
+This function returns a love2d audio.Source-object.
+
+> lush.update()
+
+Should be called in regular intervals to enable stopped sounds to get freed.
+
+### Tags & modifying playing sounds
+
+To act on any playing sound, you can use:
+> lush.actTag({"tag1", "tag2"}, function(source) source:setVolume(0.5) end)
+
+With the following pre-provided convenience functions:
+> function lush.tagPlay(tags) lush.actTag(tags, function(source) source:play() end) end
+
+> function lush.tagStop(tags) lush.actTag(tags, function(source) source:stop() end) end
+
+> function lush.tagPause(tags) lush.actTag(tags, function(source) source:pause() end) end
+
+> function lush.tagSetVolume(tags, volume) lush.actTag(tags, function(source) source:setVolume(volume) end) end
+
+
+### Further convenience functions
+> lush.setPath(p)
+
+Sets the path lush searches for files in
+
+> lush.setDefaultVolume(vol)
+
+exists.
