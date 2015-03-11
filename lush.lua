@@ -10,7 +10,7 @@ local getSoundData = function(str)
 	end
 end
 
-lush = {} -- Lightweight, Unefficient Sound Helper library
+local lush = {} -- Lightweight, Unefficient Sound Helper library
 local sources = {}
 local path = ""
 local defaultVolume = 1.0
@@ -102,5 +102,7 @@ function lush.tagPlay(tags) lush.actTag(tags, function(source) source:play() end
 function lush.tagStop(tags) lush.actTag(tags, function(source) source:stop() end) end
 function lush.tagPause(tags) lush.actTag(tags, function(source) source:pause() end) end
 function lush.tagSetVolume(tags, volume) lush.actTag(tags, function(source) source:setVolume(volume) end) end
+
+return lush
 
 end
